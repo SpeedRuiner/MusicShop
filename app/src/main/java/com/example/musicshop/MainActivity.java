@@ -3,9 +3,12 @@ package com.example.musicshop;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,12 +24,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     HashMap goodsMap;
     String goodsName;
     double price;
+    EditText userNameOrderEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        userNameOrderEditText = findViewById(R.id.nameEditText);
+
+        createSpinner();
+
+        createMap();
+
+    }
+
+    void createSpinner(){
         spinner = findViewById(R.id.spinnerSelectItem);
         spinnerArrayList = new ArrayList();
         spinner.setOnItemSelectedListener(this);
@@ -39,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
 
+    }
+
+    void createMap(){
         goodsMap = new HashMap();
         goodsMap.put("Nexus", 450.0);
         goodsMap.put("Redmi Pro 10", 1050.0);
@@ -71,10 +87,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         TextView priceTextView = findViewById(R.id.priceTextView);
         priceTextView.setText("" + quantity * price);
 
+        ImageView goodsImageView = findViewById(R.id.goodsImageView);
+
+       switch (goodsName){
+           case "Nexus":
+               goodsImageView.setImageResource(R.drawable.nexus);
+               break;
+           case "Redmi Pro 10":
+               goodsImageView.setImageResource(R.drawable.xiaomi_pro_10);
+               break;
+           case "Samsung":
+               goodsImageView.setImageResource(R.drawable.samsung);
+               break;
+           default:
+               goodsImageView.setImageResource(R.drawable.samsung);
+           break;
+       }
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void addToCart(View view) {
+
+        Order order = new Order();
+        order.userNameOrder = userNameOrderEditText.getText().toString();
+        Log.d("printUserName", order.userNameOrder);
+        order.goodsNameOrder = goodsName;
+        Log.d("goodsNameOrder", order.goodsNameOrder);
+        order.quantityOrder = quantity;
+        Log.d("quantityOrder", "" + order.quantityOrder);
+        order.orderPrice = quantity * price;
+        Log.d("orderPrice", "" + order.orderPrice);
     }
 }
