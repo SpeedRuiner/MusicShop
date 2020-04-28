@@ -5,4 +5,5 @@ public class Order {
     String goodsNameOrder;
     int quantityOrder;
     double orderPrice;
+    double price;
 }

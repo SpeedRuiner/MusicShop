@@ -10,4 +10,6 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="add_cart">Add to Cart</string>
+    <string name="order_name_activity">Your Order</string>
+    <string name="send_to_email">Send to Email</string>
 </resources>

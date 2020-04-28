@@ -2,6 +2,7 @@ package com.example.musicshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -114,13 +115,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void addToCart(View view) {
 
         Order order = new Order();
+
         order.userNameOrder = userNameOrderEditText.getText().toString();
-        Log.d("printUserName", order.userNameOrder);
         order.goodsNameOrder = goodsName;
-        Log.d("goodsNameOrder", order.goodsNameOrder);
         order.quantityOrder = quantity;
-        Log.d("quantityOrder", "" + order.quantityOrder);
         order.orderPrice = quantity * price;
-        Log.d("orderPrice", "" + order.orderPrice);
+        order.price = price;
+
+        Intent orderIntent = new Intent(MainActivity.this, OrderActivity.class);
+        orderIntent.putExtra("userNameOrderForIntent", order.userNameOrder);
+        orderIntent.putExtra("goodsNameOrderForIntent", order.goodsNameOrder);
+        orderIntent.putExtra("quantityOrderForIntent", order.quantityOrder);
+        orderIntent.putExtra("orderPriceForIntent", order.orderPrice);
+        orderIntent.putExtra("priceForIntent", order.price);
+        startActivity(orderIntent);
     }
 }
